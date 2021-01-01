@@ -1,5 +1,10 @@
 function apiModel(conn){ this._conn = conn; }
 
+apiModel.prototype.getAllTables = function(data_query, callback){
+    let query_sql = `select * from english`;    
+    this._conn.query(query_sql, callback);    
+}
+
 apiModel.prototype.getPost = function(data_query, callback){
     let sql_query = '';
     if(data_query != null){

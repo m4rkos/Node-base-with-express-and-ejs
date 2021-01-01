@@ -1,10 +1,9 @@
 const faker = require('faker')
+const dotenv = require('dotenv');
+dotenv.config();
 
 let db = require('../../config/database');
 let conn = db();
-
-const dotenv = require('dotenv');
-dotenv.config();
 
 module.exports.about = (app, req, res) =>{    
     let users = [{
@@ -30,35 +29,20 @@ module.exports.about = (app, req, res) =>{
 
 module.exports.home = (app, req, res) =>{
 
-    // let connect = conn();    
-    // connect.on("end", (e) => console.log('DB Done :)'));    
+    let connect = conn();    
+    connect.on("end", (e) => console.log('DB Done :)'));    
 
-    // var newsModel = new application.app.models.newsDAO(connect);        
-    // newsModel.getNews(function(error, result){
-    //     res.render("news/news",{ 
-    //         title: 'Novidades',
-    //         links : {
-    //             0: 'css/vfi_style',                
-    //             1: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min',
-    //             2: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min',
-    //             3: 'https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider',
-    //             4: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min',
-    //             5: 'css/style',
-    //         },
-    //         script : {
-    //             0: 'https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min',
-    //             1: 'https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider',
-    //             2: 'https://unpkg.com/sweetalert/dist/sweetalert.min',
-    //             3: 'js/style',
-    //             //4: 'js/main_vfi'
-    //         },
-    //         dir: './',
-    //         news : result 
-    //     });
-    // });
-    // connect.end();
+    var apiModel = new app.src.models.page(connect);        
 
-    res.render('pages/home')
+    id = 0;
+
+    apiModel.getAllTables({ id }, (error, result) => {        
+        res.render('pages/home', {
+            data: result
+        });
+    });
+
+    connect.end();
 }
 
 module.exports.contact = (app, req, res) =>{

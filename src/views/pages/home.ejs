@@ -3,4 +3,8 @@
     Página Inicial
 </div>
 
+<% data.forEach(el => { %>
+    <p><%= el.title %></p>
+<% }) %>
+
 <%- contentFor('script') %>
